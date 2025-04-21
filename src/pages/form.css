@@ -1,0 +1,25 @@
+/* display: block;  Elements stack vertically; width is parent's width */
+/* display: inline; Elements sit next to each other horizontally; Width and height are ignored  */
+/* display: inline-block; Like inline, but you can set width and height. */
+
+
+.form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-evenly;
+    height: 450px;
+}
+
+.form label {
+    width: 50%;
+    font-size: 18px;
+}
+
+.form label span {
+    color: var(--danger);
+}
+
+.form input {
+    width: 50%;
+}
