@@ -52,6 +52,18 @@ function List() {
         localStorage.setItem('schedule', JSON.stringify(allItems));
     }
 
+    const handleDeleteItem = (index) => {
+        const allItems = [...scheduleItems];
+
+        for (let i = index; i < allItems.length - 1; i++) {
+            allItems[i] = allItems[i + 1]
+        }
+        allItems.pop();
+
+        setScheduleItems(allItems);
+        localStorage.setItem('schedule', JSON.stringify(allItems));
+    }
+
     return (
         <div className="list">
             <h1>Meeting Times</h1>
@@ -80,7 +92,7 @@ function List() {
                                     minute: '2-digit'
                                 })}
                             </div>
-                            <button className="danger">Delete</button>
+                            <button onClick={() => handleDeleteItem(index)} className="danger">Delete</button>
                         </div>
                     )
                 })}
