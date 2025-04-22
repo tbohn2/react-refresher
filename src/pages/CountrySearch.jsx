@@ -3,6 +3,9 @@ import { useState, useEffect } from "react";
 function CountrySearch() {
     const [countryNames, setCountryNames] = useState([]);
     const [countryToSeach, setCountyToSearch] = useState([]);
+    const [currentCountryData, setCurrentCountryData] = useState([]);
+    const [error, setError] = useState('');
+
 
     async function fetchNames() {
         const response = await fetch('https://restcountries.com/v3.1/all?fields=name');
@@ -14,9 +17,30 @@ function CountrySearch() {
         fetchNames();
     }, [])
 
-    const handleNameChange = (e) => {
+    function handleNameChange(e) {
         const { value } = e.target;
         setCountyToSearch(value);
+    }
+
+    async function fetchCountryData() {
+        const fetchURL = `https://restcountries.com/v3.1/name/${countryToSeach}?fullText=true`
+        try {
+            const response = await fetch(fetchURL);
+            const data = await response.json()
+
+            if (!response.ok) {
+                setError(data.message)
+
+                setTimeout(() => {
+                    setError('');
+                }, 5000);
+                return;
+            }
+
+            setCurrentCountryData(data);
+        } catch (error) {
+            console.log(error);
+        }
     }
 
     return (
@@ -37,6 +61,33 @@ function CountrySearch() {
                         })}
                     </datalist>
                 </div>
+            }
+            <button className="success" onClick={fetchCountryData}>Search Country</button>
+
+            {error &&
+                <div role="alert" className="error-message">{error}</div>
+            }
+
+            {currentCountryData.length > 0 &&
+                <section id="countryData">
+                    {currentCountryData.map((data, index) => {
+                        const languages = Object.values(data.languages);
+                        const currencies = Object.values(data.currencies).map((currency) => currency.name);
+
+                        return (
+                            <div key={index} className="country-card">
+                                <h1>{data.name.common}</h1>
+                                <h2>Capital: {data.capital[0]}</h2>
+                                <img src={data.flags.svg} alt={data.flags.alt} />
+                                <ul>
+                                    <li>Population: {data.population.toLocaleString('en-US')}</li>
+                                    <li>Languages: {languages.join(', ')}</li>
+                                    <li>Currency: {currencies.join(', ')}</li>
+                                </ul>
+                            </div>
+                        )
+                    })}
+                </section>
             }
         </div>
     )
