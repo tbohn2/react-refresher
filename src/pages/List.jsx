@@ -4,6 +4,7 @@ import './list.css'
 function List() {
     const [scheduleItems, setScheduleItems] = useState([]);
     const [adding, setAdding] = useState(false);
+    const [error, setError] = useState('');
     const [newItem, setNewItem] = useState({
         location: '',
         date: '',
@@ -36,6 +37,16 @@ function List() {
     }
 
     const handleAddItem = () => {
+        if (newItem.location === '' || newItem.date === '') {
+            setError('Please include location, date and time')
+
+            setTimeout(() => {
+                setError('');
+            }, 5000);
+
+            return;
+        }
+
         const allItems = [...scheduleItems];
 
         allItems.push(newItem);
@@ -48,6 +59,7 @@ function List() {
             }
         }
 
+        toggleAdding();
         setScheduleItems(allItems);
         localStorage.setItem('schedule', JSON.stringify(allItems));
     }
@@ -108,6 +120,10 @@ function List() {
             }
 
             <button className="success" onClick={toggleAdding}>{adding ? 'Cancel' : 'Add to Schedule'}</button>
+
+            {error &&
+                <div role="alert" className="error-message">{error}</div>
+            }
         </div>
     )
 }

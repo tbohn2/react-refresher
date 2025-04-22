@@ -67,3 +67,31 @@ nav a {
 nav a:hover {
   text-decoration: underline;
 }
+
+.error-message {
+  color: var(--danger);
+  background-color: pink;
+  padding: 5px 10px;
+  margin: 5px 10px;
+  border-radius: 7px;
+  font-size: 24px;
+  animation: fade 4s ease-in forwards;
+}
+
+@keyframes fade {
+  0% {
+    opacity: 0;
+  }
+
+  5% {
+    opacity: 1;
+  }
+
+  95% {
+    opacity: 1;
+  }
+
+  100% {
+    opacity: 0;
+  }
+}
