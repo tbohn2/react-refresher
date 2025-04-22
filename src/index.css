@@ -20,6 +20,8 @@ button {
   padding: 5px;
   border-radius: 7px;
   border: 1px solid var(--dark);
+  font-size: 20px;
+  font-weight: bold;
 }
 
 button.success {
@@ -31,6 +33,19 @@ button.success {
 button.success:hover {
   border: 1px solid var(--light);
   text-decoration: underline;
+}
+
+button.danger {
+  color: var(--danger);
+  background-color: var(--light);
+  border: 1px solid var(--danger);
+  transition: all 0.5s;
+  cursor: pointer;
+}
+
+button.danger:hover {
+  color: var(--dark);
+  background-color: var(--danger);
 }
 
 input {

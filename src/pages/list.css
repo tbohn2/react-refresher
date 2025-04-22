@@ -1,0 +1,25 @@
+.list {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.list h1 {
+    width: 100%;
+    text-align: center;
+}
+
+.grid-container {
+    width: 100%;
+    display: grid;
+    grid-template-columns: 1fr 1fr 0.25fr;
+    margin: 10px 0px;
+    padding: 3px;
+    font-size: 24px;
+    align-items: center;
+    border: 1px solid var(--light);
+}
+
+.grid-container div {
+    padding: 3px 3px;
+}
