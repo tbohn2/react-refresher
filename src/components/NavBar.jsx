@@ -6,6 +6,7 @@ function NavBar() {
             <Link to='/'>Home</Link>
             <Link to='/form'>Form</Link>
             <Link to='/list'>List</Link>
+            <Link to='/countrySearch'>Country Search</Link>
         </nav>
     )
 }
