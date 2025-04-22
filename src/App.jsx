@@ -3,6 +3,7 @@ import { BrowserRouter as Router, Route, Routes } from 'react-router-dom' // Rea
 import NavBar from './components/NavBar'
 import Home from './pages/Home'
 import Form from './pages/Form'
+import List from './pages/List'
 import reactLogo from './assets/react.svg'
 import viteLogo from '/vite.svg'
 import './App.css'
@@ -18,6 +19,7 @@ function App() {
       <Routes>
         <Route path='/' element={<Home />}></Route>
         <Route path='/form' element={<Form />}></Route>
+        <Route path='/list' element={<List />}></Route>
         <Route path='/*' element={<Home />}></Route>
       </Routes>
     </Router>
