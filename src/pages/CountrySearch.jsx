@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import './countrySearch.css';
 
 function CountrySearch() {
     const [countryNames, setCountryNames] = useState([]);
@@ -37,14 +38,22 @@ function CountrySearch() {
                 return;
             }
 
-            setCurrentCountryData(data);
+            const prev = [...currentCountryData];
+            prev.push(data[0]);
+            setCurrentCountryData(prev);
         } catch (error) {
             console.log(error);
         }
+    };
+
+    function removeCountry(index) {
+        const countryData = [...currentCountryData];
+        countryData.splice(index, 1);
+        setCurrentCountryData(countryData);
     }
 
     return (
-        <div>
+        <div id="country-search">
             {countryNames.length > 0 &&
                 <div>
                     <input
@@ -62,7 +71,7 @@ function CountrySearch() {
                     </datalist>
                 </div>
             }
-            <button className="success" onClick={fetchCountryData}>Search Country</button>
+            <button className="success" onClick={fetchCountryData}>Add Country</button>
 
             {error &&
                 <div role="alert" className="error-message">{error}</div>
@@ -76,6 +85,7 @@ function CountrySearch() {
 
                         return (
                             <div key={index} className="country-card">
+                                <button className="danger" onClick={() => removeCountry(index)}>X</button>
                                 <h1>{data.name.common}</h1>
                                 <h2>Capital: {data.capital[0]}</h2>
                                 <img src={data.flags.svg} alt={data.flags.alt} />
