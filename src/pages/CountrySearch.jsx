@@ -9,8 +9,14 @@ function CountrySearch() {
 
 
     async function fetchNames() {
-        const response = await fetch('https://restcountries.com/v3.1/all?fields=name');
-        const data = await response.json();
+        let data = sessionStorage.getItem('countryNames')
+        if (data === null) {
+            const response = await fetch('https://restcountries.com/v3.1/all?fields=name');
+            data = await response.json();
+            sessionStorage.setItem('countryNames', JSON.stringify(data));
+        } else {
+            data = JSON.parse(data);
+        }
         setCountryNames(data);
     }
 
@@ -41,6 +47,7 @@ function CountrySearch() {
             const prev = [...currentCountryData];
             prev.push(data[0]);
             setCurrentCountryData(prev);
+            setCountyToSearch('');
         } catch (error) {
             console.log(error);
         }
