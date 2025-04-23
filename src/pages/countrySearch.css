@@ -61,3 +61,9 @@
     list-style: none;
     text-align: start;
 }
+
+@media screen and (max-width: 768px) {
+    .country-card {
+        width: 80vw;
+    }
+}

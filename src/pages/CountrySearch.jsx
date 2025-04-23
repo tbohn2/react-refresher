@@ -3,7 +3,7 @@ import './countrySearch.css';
 
 function CountrySearch() {
     const [countryNames, setCountryNames] = useState([]);
-    const [countryToSeach, setCountyToSearch] = useState([]);
+    const [countryToSearch, setCountyToSearch] = useState([]);
     const [currentCountryData, setCurrentCountryData] = useState([]);
     const [error, setError] = useState('');
 
@@ -30,10 +30,20 @@ function CountrySearch() {
     }
 
     async function fetchCountryData() {
-        const fetchURL = `https://restcountries.com/v3.1/name/${countryToSeach}?fullText=true`
+        const alreadyAdded = currentCountryData.some(c => c.name.common === countryToSearch);
+
+        if (alreadyAdded) {
+            setError('Country already added')
+
+            setTimeout(() => {
+                setError('');
+            }, 5000);
+            return;
+        }
+
+        const fetchURL = `https://restcountries.com/v3.1/name/${countryToSearch}?fullText=true`
         try {
             const response = await fetch(fetchURL);
-            const data = await response.json()
 
             if (!response.ok) {
                 setError(data.message)
@@ -44,12 +54,17 @@ function CountrySearch() {
                 return;
             }
 
-            const prev = [...currentCountryData];
-            prev.push(data[0]);
-            setCurrentCountryData(prev);
+            const data = await response.json()
+            setCurrentCountryData(prev => [...prev, data[0]]);
             setCountyToSearch('');
         } catch (error) {
             console.log(error);
+            setError('An error has occurred; Verify country name')
+
+            setTimeout(() => {
+                setError('');
+            }, 5000);
+            return;
         }
     };
 
@@ -66,7 +81,7 @@ function CountrySearch() {
                     <input
                         list="countryNames"
                         name="countryToSearch"
-                        value={countryToSeach}
+                        value={countryToSearch}
                         onChange={handleNameChange}
                     />
                     <datalist id="countryNames" >
